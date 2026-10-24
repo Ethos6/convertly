@@ -50,6 +50,6 @@ Rulesets protect branches and tags; deleting the whole repository is an admin pe
    `release.yml`, environment `pypi`.
 2. In the GitHub repo: **Settings → Environments → New environment** `pypi` (add yourself as required reviewer),
    and **Settings → Variables** `PUBLISH_TO_PYPI = true`.
-3. Bump `__version__` in `src/convertly/__init__.py`, update `CHANGELOG.md`, merge, then
-   `git tag v0.1.0 && git push origin v0.1.0`. The workflow builds, attests provenance, creates the GitHub
+3. Bump `__version__` in `src/convertly/__init__.py`, update `CHANGELOG.md`, merge, then either
+   `git tag v0.1.0 && git push origin v0.1.0`, or run **Actions → Release → Run workflow** with the version. The workflow builds, attests provenance, creates the GitHub
    release, and publishes to PyPI. The tag can't be moved or deleted afterwards.

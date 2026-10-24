@@ -9,10 +9,10 @@
   <a href="https://github.com/Ethos6/convertly/actions/workflows/ci.yml"><img src="https://github.com/Ethos6/convertly/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.10%E2%80%933.13-3776ab" alt="Python 3.10–3.13">
   <img src="https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Linux-supported-555" alt="Windows, macOS, Linux">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-5b5bd6" alt="MIT"></a>
+  <a href="https://github.com/Ethos6/convertly/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-5b5bd6" alt="MIT"></a>
 </p>
 
-<p align="center"><img src="docs/media/ui.png" alt="The convertly web UI: a ring of target formats around the dropped file, with chips and options on the right and finished downloads below" width="820"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Ethos6/convertly/main/docs/media/ui.png" alt="The convertly web UI: a ring of target formats around the dropped file, with chips and options on the right and finished downloads below" width="820"></p>
 
 ```bash
 pip install convertly-cli
@@ -34,7 +34,7 @@ convertly serve                                  # drag-and-drop UI at http://12
   The source file is never overwritten, even with `--overwrite`.
 - **Safe with untrusted files.** Zip-slip, symlink and zip-bomb checks on archives; XML parsed without entity
   expansion; YAML with `safe_load`; Pillow decompression-bomb limits; FFmpeg restricted to local files;
-  Pandoc sandboxed; CSV/XLSX output can't smuggle spreadsheet formulas. See [SECURITY.md](SECURITY.md).
+  Pandoc sandboxed; CSV/XLSX output can't smuggle spreadsheet formulas. See [SECURITY.md](https://github.com/Ethos6/convertly/blob/main/SECURITY.md).
 - **Strips location data.** EXIF and GPS metadata are dropped from converted images.
 - **Works everywhere Python does.** `pip install` on Windows, macOS and Linux. No installer, no admin rights.
 - **Scriptable.** JSON output (`--json`), meaningful exit codes, a small Python API, a polling folder watcher,
@@ -108,7 +108,7 @@ def register(reg):
     reg.add("foo", ["json", "csv"], my_convert_fn, engine="mypkg")
 ```
 
-See [docs/ADDING-A-CONVERTER.md](docs/ADDING-A-CONVERTER.md).
+See [docs/ADDING-A-CONVERTER.md](https://github.com/Ethos6/convertly/blob/main/docs/ADDING-A-CONVERTER.md).
 
 ## Privacy
 
@@ -125,10 +125,10 @@ pytest                       # engine tests skip themselves when FFmpeg / LibreO
 ruff check src tests && ruff format --check src tests
 ```
 
-Publishing and repository protection: [docs/PUBLISHING.md](docs/PUBLISHING.md).
+Publishing and repository protection: [docs/PUBLISHING.md](https://github.com/Ethos6/convertly/blob/main/docs/PUBLISHING.md).
 
 How it compares with [Filee](https://github.com/KnifeLemon/Filee), the project that inspired it, and the design
-decisions behind it: [docs/RESEARCH.md](docs/RESEARCH.md). Contributions welcome: [CONTRIBUTING.md](CONTRIBUTING.md).
+decisions behind it: [docs/RESEARCH.md](https://github.com/Ethos6/convertly/blob/main/docs/RESEARCH.md). Contributions welcome: [CONTRIBUTING.md](https://github.com/Ethos6/convertly/blob/main/CONTRIBUTING.md).
 
 ## License
 
