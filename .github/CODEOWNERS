@@ -1,0 +1,5 @@
+# Changes to these paths need a review from the owners (set the handle when publishing).
+*                     @Ethos6
+/.github/             @Ethos6
+/src/convertly/safety.py @Ethos6
+/src/convertly/web/   @Ethos6
