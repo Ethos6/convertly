@@ -1,11 +1,22 @@
 name: Release
 
+# Two ways to release:
+#   - push a tag:            git tag v0.1.0 && git push origin v0.1.0
+#   - from the GitHub UI:    Actions → Release → Run workflow → version "0.1.0" (creates the tag on main)
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, without the v (must match src/convertly/__init__.py)"
+        required: true
 
 permissions:
   contents: read
+
+env:
+  TAG: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
 
 jobs:
   build:
@@ -17,19 +28,41 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install build
+      - run: pip install build twine
       - name: Tag must match package version
         run: |
           v=$(python -c "import re;print(re.search(r'__version__ = \"(.+?)\"', open('src/convertly/__init__.py').read()).group(1))")
-          [ "v$v" = "${GITHUB_REF_NAME}" ] || { echo "tag ${GITHUB_REF_NAME} != v$v"; exit 1; }
+          [ "v$v" = "$TAG" ] || { echo "tag $TAG != v$v"; exit 1; }
+      - name: Dispatch only from main
+        if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'
+        run: echo "run this from main" && exit 1
       - run: python -m build
+      - run: twine check dist/*
       - uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
 
-  github-release:
+  pypi:
+    # Needs a PyPI "trusted publisher" for this repo + release.yml + environment "pypi".
+    if: vars.PUBLISH_TO_PYPI == 'true'
     needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/convertly-cli
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: [build, pypi]
+    if: ${{ !failure() && !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -43,21 +76,12 @@ jobs:
       - uses: actions/attest-build-provenance@v2
         with:
           subject-path: dist/*
-      - env:
+      - name: Create the GitHub release (and the tag, when dispatched)
+        env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --generate-notes --verify-tag
-
-  pypi:
-    # Enable after configuring a PyPI "trusted publisher" for this repo + workflow + environment "pypi".
-    if: vars.PUBLISH_TO_PYPI == 'true'
-    needs: build
-    runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - uses: pypa/gh-action-pypi-publish@release/v1
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
+            gh release create "$TAG" dist/* --repo "$GITHUB_REPOSITORY" --generate-notes --target "$GITHUB_SHA"
+          else
+            gh release create "$TAG" dist/* --repo "$GITHUB_REPOSITORY" --generate-notes --verify-tag
+          fi
