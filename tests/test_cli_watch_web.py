@@ -102,7 +102,7 @@ def test_watch_converts_stable_files_once(png, tmp_path):
     inbox.mkdir()
     w = FolderWatcher(inbox, "jpg", move_originals=True)
     (inbox / "a.png").write_bytes(png.read_bytes())
-    (inbox / "notes.unknownext").write_text("x")
+    (inbox / "notes.unknownext").write_text("x", encoding="utf-8")
     assert w.poll_once() == []  # first sighting: wait until stable
     results = w.poll_once()
     assert len(results) == 1 and results[0].ok

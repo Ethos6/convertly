@@ -30,8 +30,13 @@ def _read_text(path: Path) -> str:
             continue
         if enc == "utf-16" and raw[:2] not in (b"\xff\xfe", b"\xfe\xff"):
             continue
-        return text
-    return raw.decode("cp1252", "replace")
+        return _unix_newlines(text)
+    return _unix_newlines(raw.decode("cp1252", "replace"))
+
+
+def _unix_newlines(text: str) -> str:
+    """Windows (CRLF) and old Mac (CR) line endings become LF."""
+    return text.replace("\r\n", "\n").replace("\r", "\n")
 
 
 # ---------- loading ----------
