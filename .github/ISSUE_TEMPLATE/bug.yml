@@ -1,0 +1,22 @@
+name: Bug report
+description: A conversion failed or produced a wrong result
+labels: [bug]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: Command or UI action
+      placeholder: convertly convert report.docx --to pdf
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Output of `convertly --version` and `convertly engines`, plus your OS
+      render: text
