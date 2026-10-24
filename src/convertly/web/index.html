@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="convertly-token" content="{{TOKEN}}">
+<meta name="convertly-max-upload" content="{{MAX_UPLOAD}}">
+<title>convertly</title>
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo" aria-hidden="true"></span>convertly <small>v{{VERSION}}</small></div>
+  <div class="private" title="Files are converted on this computer and never uploaded anywhere.">● Local only</div>
+</header>
+
+<main>
+  <section id="drop" class="drop" tabindex="0" role="button" aria-label="Drop files here or press Enter to choose files">
+    <input id="picker" type="file" multiple hidden>
+    <div class="drop-inner">
+      <div class="drop-icon" aria-hidden="true"></div>
+      <h1>Drop files anywhere</h1>
+      <p>or <u>choose files</u>. A ring of formats opens. Pick one, done.</p>
+    </div>
+  </section>
+
+  <section id="stage" class="stage" hidden>
+    <div class="ring-wrap">
+      <svg id="ring" viewBox="-160 -160 320 320" role="menu" aria-label="Target formats"></svg>
+      <div class="hub">
+        <strong id="hub-count">0</strong>
+        <span id="hub-label">files</span>
+        <button id="clear" class="link" type="button">clear</button>
+      </div>
+    </div>
+    <div class="side">
+      <h2>Convert to</h2>
+      <div id="chips" class="chips" role="list"></div>
+      <details class="opts">
+        <summary>Options</summary>
+        <label>Quality <input id="o-quality" type="number" min="1" max="100" placeholder="auto"></label>
+        <label>Max width <input id="o-width" type="number" min="1" placeholder="px"></label>
+        <label>Max height <input id="o-height" type="number" min="1" placeholder="px"></label>
+        <label>PDF pages <input id="o-pages" type="text" placeholder="e.g. 1-3,5"></label>
+        <label>DPI <input id="o-dpi" type="number" min="10" max="1200" placeholder="150"></label>
+        <label class="check"><input id="o-gray" type="checkbox"> Grayscale</label>
+      </details>
+      <p id="nothing" class="muted" hidden>No common target for this mix of files. Try fewer kinds at once, or check <code>convertly engines</code> for optional engines.</p>
+    </div>
+  </section>
+
+  <section class="results">
+    <h2 id="results-title" hidden>Results</h2>
+    <ul id="results"></ul>
+  </section>
+</main>
+
+<footer>Files stay on this computer. <span id="engines"></span></footer>
+<script src="/app.js"></script>
+</body>
+</html>
