@@ -56,7 +56,10 @@ def test_gif_to_mp4(animated_gif):
 @pytest.mark.ffmpeg
 def test_ffmpeg_refuses_network_playlists(tmp_path):
     fake = tmp_path / "evil.mp4"
-    fake.write_text("#EXTM3U\n#EXT-X-MEDIA-SEQUENCE:0\n#EXTINF:10.0,\nhttp://127.0.0.1:9/secret.ts\n#EXT-X-ENDLIST\n")
+    fake.write_text(
+        "#EXTM3U\n#EXT-X-MEDIA-SEQUENCE:0\n#EXTINF:10.0,\nhttp://127.0.0.1:9/secret.ts\n#EXT-X-ENDLIST\n",
+        encoding="utf-8",
+    )
     with pytest.raises(Exception):
         convert_file(fake, "mp3")
     assert not list(tmp_path.glob("*.mp3"))
@@ -94,7 +97,7 @@ def test_md_to_epub_with_pandoc(tmp_path):
     import zipfile
 
     p = tmp_path / "book.md"
-    p.write_text("# Chapter 1\n\nOnce upon a time.\n")
+    p.write_text("# Chapter 1\n\nOnce upon a time.\n", encoding="utf-8")
     out = convert_file(p, "epub").outputs[0]
     with zipfile.ZipFile(out) as zf:
         assert "mimetype" in zf.namelist()
@@ -112,7 +115,7 @@ def test_pandoc_docx_drops_images_outside_folder(tmp_path):
     docs.mkdir()
     Image.new("RGB", (4, 4)).save(docs / "inside.png")
     p = docs / "a.md"
-    p.write_text(f"![leak]({outside})\n\n![ok](inside.png)\n\n![net](http://127.0.0.1:9/x.png)\n")
+    p.write_text(f"![leak]({outside})\n\n![ok](inside.png)\n\n![net](http://127.0.0.1:9/x.png)\n", encoding="utf-8")
     from convertly.converters.office import pandoc as run_pandoc
 
     out = tmp_path / "a.docx"
@@ -127,14 +130,14 @@ def test_pandoc_sandbox_blocks_includes(tmp_path):
     if not engines.pandoc_has_sandbox():
         pytest.skip("pandoc without --sandbox")
     secret = tmp_path / "secret.txt"
-    secret.write_text("TOPSECRET")
+    secret.write_text("TOPSECRET", encoding="utf-8")
     p = tmp_path / "inc.tex"
-    p.write_text("\\documentclass{article}\\begin{document}\\input{secret.txt}\\end{document}")
+    p.write_text("\\documentclass{article}\\begin{document}\\input{secret.txt}\\end{document}", encoding="utf-8")
     try:
         out = convert_file(p, "md").outputs[0]
     except Exception:  # noqa: BLE001 - refusing is fine too
         return
-    assert "TOPSECRET" not in out.read_text()
+    assert "TOPSECRET" not in out.read_text(encoding="utf-8")
 
 
 def test_run_engine_timeout_and_errors(tmp_path):
