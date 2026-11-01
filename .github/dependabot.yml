@@ -1,16 +1,16 @@
-# Version-update pull requests are off (open-pull-requests-limit: 0). Security updates still apply.
 version: 2
 updates:
   - package-ecosystem: pip
-    open-pull-requests-limit: 0
     directory: "/"
     schedule:
-      interval: weekly
+      interval: monthly
     groups:
       python:
         patterns: ["*"]
   - package-ecosystem: github-actions
-    open-pull-requests-limit: 0
     directory: "/"
     schedule:
-      interval: weekly
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
