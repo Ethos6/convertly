@@ -3,7 +3,7 @@
 ## Reporting a vulnerability
 
 Please report privately through **GitHub → Security → Report a vulnerability**
-(https://github.com/Ethos6/convertly/security/advisories/new), or email marketing@atomesus.com.
+(https://github.com/Ethos6/convertly/security/advisories/new).
 Don't open a public issue. We aim to acknowledge within 3 working days and to ship a fix for
 confirmed issues within 30 days, crediting you unless you'd rather not be named.
 

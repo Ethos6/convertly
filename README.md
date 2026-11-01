@@ -132,5 +132,5 @@ decisions behind it: [docs/RESEARCH.md](docs/RESEARCH.md). Contributions welcome
 
 ## License
 
-MIT © 2026 Atomesus Team and convertly contributors. convertly is written from scratch and shares no code with
+MIT © 2026 Ethos 6 and convertly contributors. convertly is written from scratch and shares no code with
 other converters. Optional engines are separate programs under their own licenses.
