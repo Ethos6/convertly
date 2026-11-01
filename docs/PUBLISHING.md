@@ -10,7 +10,7 @@ gh auth login
 
 unzip convertly.zip && cd convertly
 scripts/publish.sh                       # your personal account, public repo named "convertly"
-scripts/publish.sh --owner atomesus      # or an organization
+scripts/publish.sh --owner my-org        # or an organization
 scripts/publish.sh --dry-run             # print every command without running it
 ```
 

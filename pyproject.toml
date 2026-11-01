@@ -10,7 +10,7 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
-authors = [{ name = "Atomesus Team", email = "marketing@atomesus.com" }]
+authors = [{ name = "Ethos 6" }]
 keywords = ["converter", "file-conversion", "pdf", "images", "ffmpeg", "cli", "privacy", "offline"]
 classifiers = [
   "Development Status :: 4 - Beta",
